@@ -1,0 +1,2 @@
+# Bert_comment_classify
+使用bert的pytorch版本对评论进行分类
