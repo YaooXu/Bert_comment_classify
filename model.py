@@ -5,14 +5,9 @@ from pytorch_pretrained_bert.modeling import BertForPreTraining, BertPreTrainedM
 from torch.nn import BCEWithLogitsLoss
 
 
-
 def generate_model(args, num_labels, device, n_gpu):
-    # if args.pretrain_path:
-    #     model_state_dict = torch.load(args.pretrain_path)
-    #     model = BertForMultiLabelSequenceClassification.from_pretrained(args.bert_model, num_labels=num_labels,
-    #                                                                     state_dict=model_state_dict)
-    # else:
-    model = BertForMultiLabelSequenceClassification.from_pretrained(args.bert_model, num_labels=num_labels)
+    model = BertForMultiLabelSequenceClassification.from_pretrained(
+        args.bert_model, num_labels=num_labels)
 
     if args.fp16:
         model.half()
@@ -79,13 +74,15 @@ class BertForMultiLabelSequenceClassification(BertPreTrainedModel):
         self.apply(self.init_bert_weights)
 
     def forward(self, input_ids, token_type_ids=None, attention_mask=None, labels=None):
-        _, pooled_output = self.bert(input_ids, token_type_ids, attention_mask, output_all_encoded_layers=False)
+        _, pooled_output = self.bert(
+            input_ids, token_type_ids, attention_mask, output_all_encoded_layers=False)
         pooled_output = self.dropout(pooled_output)
         logits = self.classifier(pooled_output)
 
         if labels is not None:
             loss_fct = BCEWithLogitsLoss()
-            loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1, self.num_labels))
+            loss = loss_fct(logits.view(-1, self.num_labels),
+                            labels.view(-1, self.num_labels))
             return logits, loss
         else:
             return logits

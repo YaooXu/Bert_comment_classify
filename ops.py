@@ -20,9 +20,6 @@ def parse_args():
     parser.add_argument("--data_dir",
                         default='./data', type=str,
                         help="path of data directory")
-    parser.add_argument("--pretrain_path",
-                        default=None, type=str,
-                        help="path of pretrian model (./chche/xxx.bin)")
     parser.add_argument("--evl_freq",
                         default=2000, type=int,
                         help="The frequency of evaluate dev set")
@@ -96,7 +93,7 @@ def parse_args():
                         help="Record the epochs of last train")
     parser.add_argument("--resume_path",
                         default=None, type=str,
-                        help="Where to continue")
+                        help="path of pretrian model")
     parser.add_argument("--begin_it",
                         default=0, type=int,
                         help="Record the iteration of last train")
