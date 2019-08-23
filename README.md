@@ -24,13 +24,13 @@ https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/overview
 1. 训练
 
 ```
-python --do_train [--do_val] --train_batch_size 8 --learning_rate 3e-5 --num_train_epochs --max_seq_length 256
+python --train_size -1 --val_ratio 0.5 --do_train --do_val --max_seq_length 256 --checkpoint 3 --num_train_epochs 3
 ```
 
 2. 预测
 
 ```
-python --do_eval --predict_batch_size 8 --max_seq_length 256
+python --resume_path ./cache/save_1_2.pth --do_eval --predict_batch_size 8 --max_seq_length 256
 ```
 
 其他未列举的参数均采用默认值

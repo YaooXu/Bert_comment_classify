@@ -64,7 +64,7 @@ if __name__ == '__main__':
         train_examples = get_train_examples(args)
 
         if args.do_val:
-            train_data, val_data = generate_dataset(args, train_examples, tokenizer, 0.8)
+            train_data, val_data = generate_dataset(args, train_examples, tokenizer, args.val_ratio)
             val_dataloader = DataLoader(val_data, batch_size=args.predict_batch_size)
         else:
             train_data = generate_dataset(args, train_examples, tokenizer)

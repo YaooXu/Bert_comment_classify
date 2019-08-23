@@ -32,6 +32,10 @@ def train_epoch(args, device, epoch, model, optimizer, data_loader,
 
     end_time = time.time()
     for i, batch in enumerate(data_loader):
+        # 找到上次中断处....不优雅
+        if i < st:
+            continue
+
         data_time.update(time.time() - end_time)
 
         batch = tuple(t.to(device) for t in batch)
@@ -80,12 +84,12 @@ def train_epoch(args, device, epoch, model, optimizer, data_loader,
             loss=losses,
             acc=accuracies))
 
-        if (args.global_step + 1) % args.checkpoint == 0:
+        if args.global_step % args.checkpoint == 0:
             save_file_path = os.path.join(args.model_save_dir,
-                                          'save_{}_{}.pth'.format(epoch, i))
+                                          'save_{}_{}.pth'.format(epoch, i + 1))
             states = {
                 'epoch': epoch,
-                'iteration': i + 1,
+                'iteration': i + 1,  # 下次直接从[ (i + 1) * batch:]开始
                 'state_dict': model.state_dict(),
                 'optimizer': optimizer.state_dict(),
             }

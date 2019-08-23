@@ -36,9 +36,9 @@ def parse_args():
     parser.add_argument("--train_size",
                         default=-1, type=int,
                         help="How much train examples to read")
-    parser.add_argument("--val_size",
-                        default=-1, type=int,
-                        help="How much validation examples to read")
+    parser.add_argument("--val_ratio",
+                        default=0.5, type=float,
+                        help="The proportion of validation sets in the data set")
     parser.add_argument("--test_size",
                         default=-1, type=int,
                         help="How much test examples to read")
